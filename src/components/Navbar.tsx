@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Menu, X, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import Logo from '../../images/image 5.png';
+import Logo from '../../images/logo.png';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,7 +22,7 @@ const Navbar = () => {
           <Link to="/">
             <img
               src={Logo}
-              alt="Blue Health Logo"
+              alt="Prior Auth Support AI Logo"
               className="mx-auto lg:mx-0 w-40 h-auto mb-2"
             />
           </Link>

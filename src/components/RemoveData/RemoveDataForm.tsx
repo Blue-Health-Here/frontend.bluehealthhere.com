@@ -6,7 +6,7 @@ const RemoveDataForm = () => {
       <div className="max-w-[1200px] mx-auto text-center px-6 md:px-8">
         <h2 className="text-4xl md:text-5xl font-bold mb-6 md:mb-8">
           Improve Your Data Privacy with <br />
-          <span className="italic">Blue Health</span>
+          <span className="italic">Prior Auth Support AI</span>
         </h2>
         <p className="text-base md:text-lg text-gray-600 mb-8 md:mb-12">
           Lorem ipsum dolor sit amet consectetur. Convallis at commodo semper facilisi volutpat aenean aliquam nisi.

@@ -6,7 +6,7 @@ const TopNotchSection = () => {
     <section className="py-16 md:py-24">
       <div className="max-w-[1200px] mx-auto px-6 md:px-8 text-center">
         <h2 className="text-4xl md:text-5xl font-bold mb-6 md:mb-8">
-          Blue Health Providing Top Notch
+          Prior Auth Support AI Providing Top Notch
           <span className="italic block mt-2 md:mt-4">Healthcare assistance</span>
         </h2>
         <p className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto mb-8 md:mb-12">

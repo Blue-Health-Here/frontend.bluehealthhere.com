@@ -102,7 +102,7 @@ const AppealLetterForm: React.FC = () => {
       <div className="max-w-[1000px] mx-auto bg-white shadow-xl rounded-2xl p-8 md:p-12">
         <h2 className="text-4xl md:text-5xl font-bold text-center mb-8 md:mb-12">
           Generate Your Appeal Letter With <br />
-          <span className="italic">Blue Health</span>
+          <span className="italic">Prior Auth Support AI</span>
         </h2>
         <form className="space-y-6 md:space-y-8" onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">

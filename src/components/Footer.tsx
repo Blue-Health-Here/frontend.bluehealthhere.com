@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
-import Logo from '../../images/image 5.png';
+import Logo from '../../images/logo.png';
 
 const Footer = () => {
   return (
@@ -10,7 +10,7 @@ const Footer = () => {
         <div className="text-center mb-8 md:mb-12">
           <img
             src={Logo}
-            alt="Blue Health Logo"
+            alt="Prior Auth Support AI"
             className="mx-auto w-32 h-auto mb-2 md:mb-4"
           />
         </div>
@@ -21,14 +21,14 @@ const Footer = () => {
           <div>
             <h4 className="text-lg md:text-xl font-semibold mb-2 md:mb-4">Contact Info</h4>
             <p className="text-sm md:text-base text-gray-400 mb-2 md:mb-4">
-              Blue Health,<br />
+              Prior Auth Support AI,<br />
               180 TALMIDGE RD, EDISON NJ 08817
             </p>
             <a
-              href="mailto:pa@bluehealthhere.com"
+              href="mailto:pa@priorauthsupport.ai"
               className="text-sm md:text-base text-blue-600 hover:text-blue-700 transition"
             >
-              pa@bluehealthhere.com
+              pa@priorauthsupport.ai
             </a>
           </div>
 
@@ -59,7 +59,7 @@ const Footer = () => {
         {/* Bottom Section */}
         <div className="mt-8 md:mt-12 text-center">
           <p className="text-gray-600 text-xs md:text-sm">
-            &copy; 2024 Blue Health. All rights reserved.
+            &copy; 2025 Prior Auth Support AI. All rights reserved.
           </p>
         </div>
       </div>

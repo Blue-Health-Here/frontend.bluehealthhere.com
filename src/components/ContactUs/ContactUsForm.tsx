@@ -30,7 +30,7 @@ const ContactUsForm = () => {
       from_name: `${formData.firstName} ${formData.lastName}`,
       message: formData.message,
       subject: "Contact Form Submission", // Optional or dynamic
-      to_name: "Blue Health Team", // Optional or dynamic
+      to_name: "Prior Auth Support AI Team", // Optional or dynamic
     };
 
     try {
