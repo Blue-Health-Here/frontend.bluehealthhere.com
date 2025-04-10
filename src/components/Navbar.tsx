@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Menu, X, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Logo from '../../images/logo.png';

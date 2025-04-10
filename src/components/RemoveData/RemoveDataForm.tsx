@@ -1,5 +1,3 @@
-import React from 'react';
-
 const RemoveDataForm = () => {
   return (
     <section className="py-16 md:py-24">
