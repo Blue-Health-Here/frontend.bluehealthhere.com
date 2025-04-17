@@ -27,6 +27,12 @@ const Features = () => {
       title: "Prior Authorization Approval Criteria",
       description: "Easily search PA criteria for specific medication and insurance.",
       link: '/search-criteria'
+    },
+    {
+      icon: <Edit className="w-12 h-12 text-black-600" />,
+      title: "Prior Authorization Approval Criteria",
+      description: "Easily search PA criteria for specific medication and insurance.",
+      link: '/search-criteria'
     }
   ];
 
