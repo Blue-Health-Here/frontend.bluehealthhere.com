@@ -61,7 +61,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden absolute top-20 left-0 right-0 bg-black">
+        <div className="md:hidden absolute top-20 left-0 right-0 bg-black z-50">
           <div className="px-6 py-4 space-y-4">
             {menuItems.map((item) => (
               <Link

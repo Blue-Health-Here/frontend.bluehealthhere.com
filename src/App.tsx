@@ -13,6 +13,7 @@ import AppealLetter from './components/AppealLetter';
 import MedicalNecessityLetter from './components/MedicalNecessityLetter';
 import ProgressNotesAnalyzer from './components/ProgressNotesAnalyzer';
 import SearchCriteria from './components/SearchCriteria';
+import ServiceAgreement from './components/ServiceAgreement';
 
 
 function Home() {
@@ -40,6 +41,7 @@ function App() {
         <Route path="/medical-necessity-letter" element={<MedicalNecessityLetter />} />
         <Route path="/progress-notes-analyzer" element={<ProgressNotesAnalyzer />} />
         <Route path="/search-criteria" element={<SearchCriteria />} />
+        <Route path="/service-agreement" element={<ServiceAgreement />} />
       </Routes>
     </Router>
   );

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { medications, insurances } from "../suggestions"; // Import the suggestions directly
 import axios from "axios";
+import { formatPACriteria } from "../../utils/helper";
 
 const CriteriaForm: React.FC = () => {
   const [medication, setMedication] = useState<string>("");
@@ -33,7 +34,6 @@ const CriteriaForm: React.FC = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-
       if (res.data.message) {
         setResponse(res.data.message);
       } else {
@@ -80,7 +80,7 @@ const CriteriaForm: React.FC = () => {
     <section className="py-16 md:py-24">
       <div className="max-w-[600px] mx-auto bg-white shadow-xl rounded-2xl p-8 md:p-12">
         <h2 className="text-4xl md:text-5xl font-bold text-center mb-8 md:mb-12">
-        Prior Authorization Approval Criteria
+          Prior Authorization Approval Criteria
         </h2>
         <form className="space-y-6 md:space-y-8" onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 gap-6 md:gap-8">
@@ -155,42 +155,37 @@ const CriteriaForm: React.FC = () => {
           </div>
         )}
 
-{response && (
-  <div className="text-center mt-8 md:mt-12">
-    <h3 className="text-xl md:text-2xl font-semibold mb-6 md:mb-8">
-      PA Criteria:
-    </h3>
-    <div className="p-4 md:p-6 rounded-lg bg-gray-100 shadow-lg text-left">
-      {Array.isArray(response) && response[0]?.fields?.["PA Criteria"] ? (
-        <pre
-          className="text-sm md:text-base whitespace-pre-wrap"
-          style={{
-            fontFamily: "Arial, sans-serif",
-            lineHeight: "1.6",
-          }}
-        >
-          {response[0].fields["PA Criteria"]
-            .split(/(?<!\n)\n(?!\n)/g) // Adjust for single newlines
-            .map((section: string, index: number) => {
-              const [title, ...descriptionParts] = section.split(":");
-              const description = descriptionParts.join(":").trim();
-              return (
-                <div key={index} className="mb-4">
-                  <p>
-                    <strong>{title.trim()}:</strong> {description}
-                  </p>
-                </div>
-              );
-            })}
-        </pre>
-      ) : (
-        <p className="text-gray-600">PA Criteria not found.</p>
-      )}
-    </div>
-  </div>
-)}
-
-
+        {response && (
+          <div className="text-center mt-8 md:mt-12">
+            <h3 className="text-xl md:text-2xl font-semibold mb-6 md:mb-8">
+              PA Criteria:
+            </h3>
+            <div className="p-4 md:p-6 rounded-lg bg-gray-100 shadow-lg text-left">
+              {Array.isArray(response) && response[0]?.fields?.["PA Criteria"] ? (
+                <pre
+                  className="text-sm md:text-base whitespace-pre-wrap"
+                  style={{
+                    fontFamily: "Arial, sans-serif",
+                    lineHeight: "1.6",
+                  }}
+                >
+                  {formatPACriteria(response[0].fields["PA Criteria"]).map((section: any, index: number) => (
+                    <div key={index}>
+                      <h3 className="py-2 text-lg"><strong>{section.title}</strong></h3>
+                      <ul>
+                        {section.items.map((item: any, idx: number) => (
+                          <li className="py-1" key={idx}>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </pre>
+              ) : (
+                <p className="text-gray-600">PA Criteria not found.</p>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { FileText, FilePlus, Edit } from 'lucide-react';
 
@@ -30,9 +29,9 @@ const Features = () => {
     },
     {
       icon: <Edit className="w-12 h-12 text-black-600" />,
-      title: "Prior Authorization Approval Criteria",
+      title: "Service <br /> Agreement",
       description: "Easily search PA criteria for specific medication and insurance.",
-      link: '/search-criteria'
+      link: '/service-agreement'
     }
   ];
 
@@ -43,12 +42,8 @@ const Features = () => {
           {features.map((feature, index) => (
             <div key={index} className="bg-gray-50 p-8 md:p-12 rounded-2xl shadow-md flex flex-col items-center text-center">
               <div className="mb-4 md:mb-6">{feature.icon}</div>
-              <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-2 md:mb-4">
-                {feature.title} 
-              </h3>
-              <p className="text-base md:text-lg text-gray-600 mb-4 md:mb-6">
-                {feature.description}
-              </p>
+              <h3 dangerouslySetInnerHTML={{ __html: feature.title }} className="text-xl md:text-2xl font-semibold text-gray-900 mb-2 md:mb-4" />
+              <p dangerouslySetInnerHTML={{ __html: feature.description }} className="text-base md:text-lg text-gray-600 mb-4 md:mb-6" />
               <Link to={feature.link}>
                 <button className="bg-black text-white text-sm md:text-lg px-6 py-3 md:px-8 md:py-4 rounded-full flex items-center gap-3 transition-colors">
                   Try it
