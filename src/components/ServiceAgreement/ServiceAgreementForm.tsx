@@ -1,23 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { fetchPharmacies } from "../../services";
+import axios from "axios";
+
+export const initialVals = {
+    prescriber_name: "",
+    practice_name: "",
+    doctor_name: "",
+    prescriber_phone: "",
+    pharmacy_name: ""
+};
 
 const ServiceAgreementForm: React.FC = () => {
-    const [serviceAgreementForm, setServiceAgreementForm] = useState({
-        prescriber_name: "", 
-        practice_name: "", 
-        doctor_name: "", 
-        prescriber_phone: "",
-        pharmacy_name: ""
-    });
+    const [serviceAgreementForm, setServiceAgreementForm] = useState<any>(initialVals);
     const [showPharmacyDropdown, setShowPharmacyDropdown] = useState<boolean>(false);
-    // const [response, setResponse] = useState<string | null>(null);
-    // const [loading, setLoading] = useState<boolean>(false);
-    // const [progress, setProgress] = useState<number>(0);
-    // const [showInsuranceDropdown, setShowInsuranceDropdown] = useState<boolean>(false);
+    const [pharmacies, setPharmacies] = useState<any | null>(null);
+    const [error, setError] = useState<any | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [progress, setProgress] = useState<number>(0);
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        console.log(serviceAgreementForm, "service agreement form");
-    };
+    useEffect(() => {
+        fetchPharmacies().then((res: any) => {
+            setPharmacies(res.data);
+        });
+    }, []);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setServiceAgreementForm({
@@ -33,6 +38,46 @@ const ServiceAgreementForm: React.FC = () => {
         return pharmacies.filter((pharmacy) =>
             pharmacy.toLowerCase().includes(input.toLowerCase())
         );
+    };
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setLoading(true);
+        const interval = setInterval(() => {
+            setProgress((prev) => (prev < 90 ? prev + 6 : prev));
+        }, 500);
+
+        let formData = new FormData();
+        Object.keys(serviceAgreementForm).forEach((item: any) => {
+            formData.append(item, serviceAgreementForm[item]);
+        });
+
+        try {
+            // await postServiceAgreement(formData, serviceAgreementForm.pharmacy_name);
+            axios.post("https://backend.bluehealthhere.com/service-agreement", formData, {
+                responseType: 'blob',
+            })
+                .then((response) => {
+                    const file = new Blob([response.data], { type: 'application/pdf' });
+                    const fileURL = URL.createObjectURL(file);
+                    const a = document.createElement('a');
+                    a.href = fileURL;
+                    a.download = serviceAgreementForm.pharmacy_name + '.pdf'; // match filename from backend
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+
+                    setServiceAgreementForm(initialVals);
+                    setLoading(false);
+                })
+                .catch((error) => console.error(error));
+        } catch (error) {
+            console.error("Error:", error);
+            setError("An error occurred while searching for criteria.");
+        } finally {
+            clearInterval(interval);
+            setLoading(false);
+        }
     };
 
     return (
@@ -103,14 +148,17 @@ const ServiceAgreementForm: React.FC = () => {
                             />
                             {showPharmacyDropdown && serviceAgreementForm.pharmacy_name && (
                                 <ul className="absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 max-h-40 overflow-y-auto w-full">
-                                    {filterPharmacies(serviceAgreementForm.pharmacy_name, ["Pharmacy 1", "Pharmacy 2"]).map((pharmacy, index) => (
+                                    {filterPharmacies(serviceAgreementForm.pharmacy_name, Object.keys(pharmacies)).map((pharmacy, index) => (
                                         <li
                                             key={index}
                                             className="px-4 py-2 hover:bg-blue-100 cursor-pointer"
-                                            onClick={() => setServiceAgreementForm({
-                                                ...serviceAgreementForm,
-                                                pharmacy_name: pharmacy
-                                            })}
+                                            onClick={() => {
+                                                setServiceAgreementForm({
+                                                    ...serviceAgreementForm,
+                                                    pharmacy_name: pharmacy
+                                                })
+                                                setShowPharmacyDropdown(false)
+                                            }}
                                         >
                                             {pharmacy}
                                         </li>
@@ -125,12 +173,12 @@ const ServiceAgreementForm: React.FC = () => {
                             type="submit"
                             className="bg-black text-white text-sm md:text-lg px-8 md:px-12 py-3 md:py-4 rounded-full hover:bg-gray-800 transition-colors"
                         >
-                            {"Submit"}
+                            {loading ? "Submitting..." : "Submit"}
                         </button>
                     </div>
                 </form>
 
-                {/* {loading && (
+                {loading && (
                     <div className="mt-8">
                         <div className="w-full bg-gray-300 rounded-full h-4">
                             <div
@@ -139,7 +187,8 @@ const ServiceAgreementForm: React.FC = () => {
                             ></div>
                         </div>
                     </div>
-                )} */}
+                )}
+
             </div>
         </section>
     );
