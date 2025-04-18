@@ -42,18 +42,18 @@ const ServiceAgreementForm: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setLoading(true);
-        const interval = setInterval(() => {
-            setProgress((prev) => (prev < 90 ? prev + 6 : prev));
-        }, 500);
 
         let formData = new FormData();
         Object.keys(serviceAgreementForm).forEach((item: any) => {
             formData.append(item, serviceAgreementForm[item]);
         });
 
+        const interval = setInterval(() => {
+            setProgress((prev) => (prev < 90 ? prev + 6 : prev));
+        }, 500);
+
         try {
-            // await postServiceAgreement(formData, serviceAgreementForm.pharmacy_name);
+            setLoading(true);
             axios.post("https://backend.bluehealthhere.com/service-agreement", formData, {
                 responseType: 'blob',
             })
@@ -62,21 +62,20 @@ const ServiceAgreementForm: React.FC = () => {
                     const fileURL = URL.createObjectURL(file);
                     const a = document.createElement('a');
                     a.href = fileURL;
-                    a.download = serviceAgreementForm.pharmacy_name + '.pdf'; // match filename from backend
+                    a.download = serviceAgreementForm.pharmacy_name + '.pdf';
                     document.body.appendChild(a);
                     a.click();
                     a.remove();
 
                     setServiceAgreementForm(initialVals);
                     setLoading(false);
+
+                    clearInterval(interval);
                 })
                 .catch((error) => console.error(error));
         } catch (error) {
             console.error("Error:", error);
             setError("An error occurred while searching for criteria.");
-        } finally {
-            clearInterval(interval);
-            setLoading(false);
         }
     };
 
@@ -171,6 +170,7 @@ const ServiceAgreementForm: React.FC = () => {
                     <div className="text-center">
                         <button
                             type="submit"
+                            disabled={loading}
                             className="bg-black text-white text-sm md:text-lg px-8 md:px-12 py-3 md:py-4 rounded-full hover:bg-gray-800 transition-colors"
                         >
                             {loading ? "Submitting..." : "Submit"}
@@ -188,6 +188,8 @@ const ServiceAgreementForm: React.FC = () => {
                         </div>
                     </div>
                 )}
+
+                {error && <p>{error}</p>}
 
             </div>
         </section>
